@@ -1,0 +1,271 @@
+{
+  "common": {
+    "appName": "CivicSense",
+    "tagline": "Campus issue reporting",
+    "loading": "Loading…",
+    "retry": "Try again",
+    "copy": "Copy",
+    "copied": "Copied",
+    "optional": "optional",
+    "required": "required",
+    "notSet": "Not yet set",
+    "copyFallback": "Clipboard not available. Please copy manually."
+  },
+  "nav": {
+    "skipToContent": "Skip to main content",
+    "report": "Report an issue",
+    "track": "Track a complaint",
+    "admin": "Administrator sign-in",
+    "language": "Language",
+    "main": "Main navigation",
+    "home": "Home",
+    "toggleMenu": "Toggle navigation menu"
+  },
+  "notice": {
+    "translationsIncomplete": "Assamese translations for this page are not available yet, so some text is shown in English."
+  },
+  "home": {
+    "title": "A trusted campus platform for reporting and resolving issues.",
+    "kicker": "University grievance platform",
+    "subtitle": "CivicSense helps students and staff report campus issues quickly and track progress securely until resolution.",
+    "reportCta": "Report an issue",
+    "trackCta": "Track a complaint",
+    "stepsTitle": "How CivicSense works",
+    "step1Title": "Report your issue",
+    "step1Body": "Share what happened, where it happened, and optionally add a photo.",
+    "step2Title": "AI analyses and categorises",
+    "step2Body": "The platform suggests category, priority, and department for faster action.",
+    "step3Title": "Track progress to resolution",
+    "step3Body": "Use your complaint ID and secret token to follow every status update.",
+    "categoriesTitle": "Supported complaint categories",
+    "categoriesBody": "Infrastructure, sanitation, hostels, academics, IT, transport, safety, and more.",
+    "trustTitle": "Privacy and accessibility",
+    "trustPrivacy": "No account is required. Your complaint is submitted without personal profile data.",
+    "trustAccessible": "Designed for clear reading, keyboard access, and high-contrast status indicators.",
+    "trustBilingual": "Available in English and Assamese across reporting and tracking workflows."
+  },
+  "submit": {
+    "title": "Report an issue",
+    "intro": "Submit a complaint in a few clear steps. Your report is stored securely and can be tracked privately.",
+    "fields": {
+      "title": {
+        "label": "Complaint title",
+        "hint": "Keep it concise and specific.",
+        "placeholder": "Example: Water leakage near Library Block A"
+      },
+      "description": {
+        "label": "Detailed description",
+        "hint": "Include what happened, when it started, and how it affects students or staff.",
+        "placeholder": "Describe the issue in detail so the assigned department can act quickly.",
+        "counter": "{{count}} / {{max}} characters"
+      },
+      "location": {
+        "label": "Campus location",
+        "hint": "Mention building, floor, room, hostel, or landmark.",
+        "placeholder": "Example: Hostel C, 2nd floor washroom"
+      },
+      "category": {
+        "label": "Complaint category",
+        "hint": "Optional: choose one if you already know it. Otherwise AI will categorise it.",
+        "placeholder": "Let AI categorise automatically"
+      },
+      "image": {
+        "label": "Image upload",
+        "hint": "Maximum file size: {{max}} MB.",
+        "disabled": "Image upload is currently disabled by server configuration. You can still submit your complaint.",
+        "remove": "Remove image",
+        "tooLarge": "This image is larger than {{max}} MB.",
+        "wrongType": "Please choose a supported image format.",
+        "dropTitle": "Drag and drop an image here, or choose from device",
+        "supported": "Supported formats: {{formats}}",
+        "choose": "Choose image",
+        "previewAlt": "Selected complaint image preview"
+      },
+      "language": {
+        "label": "Preferred language",
+        "hint": "Used for communication preference and AI summary language."
+      }
+    },
+    "validation": {
+      "titleLength": "Title must be between 5 and 150 characters.",
+      "descriptionLength": "Description must be between 20 and 5000 characters.",
+      "locationLength": "Location must be between 2 and 120 characters."
+    },
+    "submit": "Submit complaint",
+    "submitting": "Submitting complaint…",
+    "failed": "Submission failed",
+    "toastSuccess": "Complaint submitted successfully",
+    "success": {
+      "title": "Complaint submitted successfully",
+      "intro": "Save both values below. You need them to track your complaint later.",
+      "complaintId": "Complaint ID",
+      "token": "Secret tracking token",
+      "warning": "This tracking token is shown only once and cannot be recovered later. Save it now.",
+      "trackNow": "Go to complaint tracking",
+      "submitAnother": "Submit another complaint"
+    }
+  },
+  "track": {
+    "title": "Track a complaint",
+    "intro": "Enter your complaint ID and secret tracking token to view the latest status.",
+    "complaintId": "Complaint ID",
+    "complaintIdPlaceholder": "CS-2026-ABC123",
+    "token": "Secret tracking token",
+    "tokenPlaceholder": "XXXXX-XXXXX-XXXXX-XXXXX",
+    "submit": "Track complaint",
+    "checking": "Verifying complaint…",
+    "notFound": "No complaint matched this ID and token combination. Please check and try again.",
+    "failed": "Could not fetch complaint status.",
+    "result": {
+      "title": "Complaint tracking details",
+      "subtitle": "This view shows only public complaint information.",
+      "complaintId": "Complaint ID",
+      "complaintTitle": "Complaint title",
+      "submitted": "Submitted on",
+      "lastUpdated": "Last updated",
+      "category": "Category",
+      "status": "Current status",
+      "priority": "Priority",
+      "department": "Assigned department",
+      "aiSummary": "AI-generated summary",
+      "timeline": "Status progression timeline",
+      "progress": "Status progression",
+      "categoryPending": "Not categorised yet",
+      "priorityPending": "Not assigned yet",
+      "departmentPending": "Not assigned yet",
+      "summaryPending": "Summary not generated yet.",
+      "rejectedInfo": "This complaint is closed as rejected. If needed, submit a new complaint with updated details.",
+      "checkAnother": "Track another complaint"
+    }
+  },
+  "status": {
+    "submitted": "Submitted",
+    "underReview": "Under Review",
+    "inProgress": "In Progress",
+    "resolved": "Resolved",
+    "rejected": "Rejected"
+  },
+  "priority": {
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High",
+    "urgent": "Urgent"
+  },
+  "category": {
+    "infrastructure": "Infrastructure",
+    "electricalWater": "Electrical & Water",
+    "sanitation": "Sanitation & Hygiene",
+    "hostel": "Hostel & Accommodation",
+    "canteen": "Canteen & Food",
+    "academic": "Academic",
+    "itNetwork": "IT & Network",
+    "transport": "Transport",
+    "safety": "Safety & Security",
+    "other": "Other"
+  },
+  "department": {
+    "maintenance": "Maintenance",
+    "hostelAdministration": "Hostel Administration",
+    "academicAffairs": "Academic Affairs",
+    "security": "Security",
+    "itServices": "IT Services",
+    "canteenMess": "Canteen / Mess",
+    "transport": "Transport",
+    "generalAdministration": "General Administration"
+  },
+  "admin": {
+    "label": "Admin",
+    "viewPublic": "View public site",
+    "signOut": "Sign out",
+    "loginTitle": "CivicSense Admin",
+    "loginIntro": "Sign in to manage complaints.",
+    "email": "Email",
+    "password": "Password",
+    "signingIn": "Signing in…",
+    "signIn": "Sign in",
+    "backPublic": "Back to public site",
+    "checkingSession": "Checking session…",
+    "stats": {
+      "total": "Total",
+      "pending": "Pending",
+      "inProgress": "In progress",
+      "resolved": "Resolved",
+      "highPriority": "High priority",
+      "allComplaints": "All complaints",
+      "submittedReview": "Submitted + Under Review",
+      "beingWorked": "Being worked on",
+      "closedResolved": "Closed as resolved",
+      "highOpen": "High or Urgent, still open"
+    },
+    "complaints": "Complaints",
+    "search": "Search",
+    "searchPlaceholder": "ID, title, description, location",
+    "status": "Status",
+    "category": "Category",
+    "priority": "Priority",
+    "sort": "Sort",
+    "newestFirst": "Newest first",
+    "oldestFirst": "Oldest first",
+    "fromDate": "From date",
+    "toDate": "To date",
+    "clearFilters": "Clear filters",
+    "id": "ID",
+    "title": "Title",
+    "location": "Location",
+    "department": "Department",
+    "submitted": "Submitted",
+    "complaintCount": "complaint",
+    "page": "Page",
+    "of": "of",
+    "previous": "Previous",
+    "next": "Next",
+    "noMatch": "No complaints match these filters.",
+    "noComplaints": "No complaints yet.",
+    "tryRemoving": "Try removing a filter or searching for something else.",
+    "newSubmissions": "New submissions will appear here.",
+    "all": "All",
+    "detail": {
+      "back": "← All complaints",
+      "notFound": "Complaint {{id}} was not found.",
+      "complaint": "Complaint",
+      "preferredLanguage": "Preferred language",
+      "attachedPhoto": "Attached photo",
+      "aiAnalysis": "AI analysis",
+      "imageInspection": "Image inspection",
+      "possibleDuplicate": "Possible duplicate:",
+      "confidence": "confidence",
+      "generated": "Generated",
+      "noAi": "No AI analysis is available for this complaint. You can set the category, priority, and department manually below.",
+      "updateStatus": "Update status",
+      "statusInfo": "Status changes are recorded in the history and visible to the complainant.",
+      "statusUpdated": "Status updated.",
+      "saving": "Saving…",
+      "update": "Update status",
+      "triage": "Category, priority and department",
+      "notSet": "Not set",
+      "unassigned": "Unassigned",
+      "triageInfo": "Category and priority are shown to the complainant on the tracking page.",
+      "saved": "Saved.",
+      "saveChanges": "Save changes",
+      "statusHistory": "Status history",
+      "internalNotes": "Internal notes",
+      "notesInfo": "Only administrators can see these notes. They are never shown on the public tracking page.",
+      "newNote": "New internal note",
+      "notePlaceholder": "Add a note for other administrators…",
+      "adding": "Adding…",
+      "addNote": "Add note",
+      "noNotes": "No notes yet.",
+      "noPriority": "No priority",
+      "loading": "Loading complaint…"
+    }
+  },
+  "errors": {
+    "network": "Could not reach the server. Check your connection and try again.",
+    "generic": "Something went wrong. Please try again.",
+    "tooManyRequests": "Too many requests. Please wait a while and try again.",
+    "notFound": "Page not found."
+  },
+  "footer": {
+    "text": "CivicSense is a campus grievance and issue-management platform designed for transparent, accountable resolution."
+  }
+}
