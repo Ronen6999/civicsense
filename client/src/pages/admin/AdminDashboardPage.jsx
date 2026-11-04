@@ -8,7 +8,7 @@ import { CATEGORIES, CATEGORY_KEY, DEPARTMENTS, DEPARTMENT_KEY, PRIORITIES, PRIO
 import { adminApi } from '../../services/api.js';
 import { formatDate } from '../../utils/format.js';
 
-const FILTER_KEYS = ['search', 'status', 'category', 'priority', 'from', 'to', 'sort', 'page'];
+const FILTER_KEYS = ['search', 'status', 'category', 'priority', 'from', 'to', 'sort', 'page', 'review'];
 
 const STAT_CARDS = [
   { key: 'total', label: 'total', hint: 'allComplaints' },
@@ -51,7 +51,7 @@ export default function AdminDashboardPage() {
     return () => controller.abort();
   }, []);
 
-  const queryKey = JSON.stringify([filters.search, filters.status, filters.category, filters.priority, filters.from, filters.to, filters.sort, page]);
+  const queryKey = JSON.stringify([filters.search, filters.status, filters.category, filters.priority, filters.from, filters.to, filters.sort, filters.review, page]);
 
   const load = useCallback(
     (signal) => {
@@ -66,6 +66,7 @@ export default function AdminDashboardPage() {
             priority: filters.priority,
             from: filters.from,
             to: filters.to,
+            review: filters.review || 'all',
             sort: filters.sort || undefined,
             page,
             limit: 20,
@@ -91,7 +92,7 @@ export default function AdminDashboardPage() {
     return () => controller.abort();
   }, [load]);
 
-  const hasFilters = FILTER_KEYS.some((k) => k !== 'page' && k !== 'sort' && filters[k]);
+  const hasFilters = FILTER_KEYS.some((k) => !['page', 'sort', 'review'].includes(k) && filters[k]);
 
   const onSearch = (event) => {
     event.preventDefault();
@@ -100,7 +101,7 @@ export default function AdminDashboardPage() {
 
   const clearFilters = () => {
     setSearchText('');
-    setParams({}, { replace: true });
+    setParams(filters.review === 'flagged' ? { review: 'flagged' } : {}, { replace: true });
   };
 
   return (
@@ -123,9 +124,30 @@ export default function AdminDashboardPage() {
 
       <section aria-labelledby="complaints-heading" className="rounded-lg border border-slate-200 bg-white">
         <div className="border-b border-slate-200 p-4">
+          <div className="mb-4 flex flex-wrap gap-2" role="group" aria-label={t('admin.complaintSections')}>
+            <button
+              type="button"
+              aria-pressed={filters.review !== 'flagged'}
+              onClick={() => setFilters({ review: '' })}
+              className={`rounded-lg px-3 py-2 text-sm font-medium ${filters.review === 'flagged' ? 'text-slate-700 hover:bg-slate-100' : 'bg-brand-50 text-brand-800'}`}
+            >
+              {t('admin.complaints')}
+            </button>
+            <button
+              type="button"
+              aria-pressed={filters.review === 'flagged'}
+              onClick={() => setFilters({ review: 'flagged' })}
+              className={`rounded-lg px-3 py-2 text-sm font-medium ${filters.review === 'flagged' ? 'bg-amber-100 text-amber-950' : 'text-slate-700 hover:bg-slate-100'}`}
+            >
+              {t('admin.spamAndDuplicates')}
+            </button>
+          </div>
           <h1 id="complaints-heading" className="text-lg font-semibold text-slate-900">
-            {t('admin.complaints')}
+            {filters.review === 'flagged' ? t('admin.spamAndDuplicates') : t('admin.complaints')}
           </h1>
+          {filters.review === 'flagged' && (
+            <p className="mt-1 text-sm text-slate-600">{t('admin.aiFlaggedReviewInfo')}</p>
+          )}
 
           <form onSubmit={onSearch} className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
             <div className="sm:col-span-2 lg:col-span-2">
@@ -198,8 +220,8 @@ export default function AdminDashboardPage() {
         ) : !list ? (
           <Spinner label={t('common.loading')} />
         ) : list.items.length === 0 ? (
-          <EmptyState title={hasFilters ? t('admin.noMatch') : t('admin.noComplaints')}>
-            {hasFilters ? t('admin.tryRemoving') : t('admin.newSubmissions')}
+          <EmptyState title={hasFilters ? t('admin.noMatch') : filters.review === 'flagged' ? t('admin.noFlagged') : t('admin.noComplaints')}>
+            {hasFilters ? t('admin.tryRemoving') : filters.review === 'flagged' ? t('admin.noFlaggedInfo') : t('admin.newSubmissions')}
           </EmptyState>
         ) : (
           <>
@@ -213,6 +235,7 @@ export default function AdminDashboardPage() {
                     <th scope="col" className="hidden px-4 py-3 md:table-cell">{t('admin.location')}</th>
                     <th scope="col" className="hidden px-4 py-3 lg:table-cell">{t('admin.category')}</th>
                     <th scope="col" className="px-4 py-3">{t('admin.priority')}</th>
+                    <th scope="col" className="px-4 py-3">{t('admin.aiReview')}</th>
                     <th scope="col" className="px-4 py-3">{t('admin.status')}</th>
                     <th scope="col" className="hidden px-4 py-3 xl:table-cell">{t('admin.department')}</th>
                     <th scope="col" className="hidden px-4 py-3 sm:table-cell">{t('admin.submitted')}</th>
@@ -232,6 +255,13 @@ export default function AdminDashboardPage() {
                       <td className="hidden max-w-[12rem] truncate px-4 py-3 text-slate-700 md:table-cell">{c.location}</td>
                       <td className="hidden whitespace-nowrap px-4 py-3 text-slate-700 lg:table-cell">{c.category ? t(`category.${CATEGORY_KEY[c.category]}`, c.category) : '—'}</td>
                       <td className="px-4 py-3"><PriorityBadge priority={c.priority} /></td>
+                      <td className="px-4 py-3">
+                        <div className="flex flex-wrap gap-1">
+                          {c.aiSpamDetected && <FlagBadge tone="spam">{t('admin.spam')}</FlagBadge>}
+                          {c.aiDuplicateDetected && <FlagBadge tone="duplicate">{t('admin.duplicate')}</FlagBadge>}
+                          {!c.aiSpamDetected && !c.aiDuplicateDetected && <span className="text-slate-400">—</span>}
+                        </div>
+                      </td>
                       <td className="px-4 py-3"><StatusBadge status={c.status} /></td>
                       <td className="hidden whitespace-nowrap px-4 py-3 text-slate-700 xl:table-cell">{c.assignedDepartment ? t(`department.${DEPARTMENT_KEY[c.assignedDepartment]}`, c.assignedDepartment) : '—'}</td>
                       <td className="hidden whitespace-nowrap px-4 py-3 text-slate-700 sm:table-cell">{formatDate(c.createdAt)}</td>
@@ -259,6 +289,11 @@ export default function AdminDashboardPage() {
       </section>
     </div>
   );
+}
+
+function FlagBadge({ tone, children }) {
+  const toneClass = tone === 'spam' ? 'bg-red-100 text-red-800' : 'bg-amber-100 text-amber-900';
+  return <span className={`rounded px-2 py-0.5 text-xs font-medium ${toneClass}`}>{children}</span>;
 }
 
 function Select({ id, label, value, onChange, options, allowAll = true }) {

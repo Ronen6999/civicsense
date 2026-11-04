@@ -89,6 +89,11 @@ export function toAdminListItem(complaint) {
     status: complaint.status,
     assignedDepartment: complaint.assignedDepartment,
     hasImage: Boolean(complaint.imageUrl),
+    aiSpamDetected: Boolean(complaint.aiSummary?.spamDetected),
+    aiSpamConfidence: complaint.aiSummary?.spamConfidence ?? null,
+    aiSpamReason: complaint.aiSummary?.spamReason ?? null,
+    aiDuplicateDetected: Boolean(complaint.aiSummary?.duplicateDetected),
+    aiDuplicateOf: complaint.aiSummary?.duplicateOf ?? null,
     createdAt: complaint.createdAt,
     updatedAt: complaint.updatedAt,
   };
@@ -114,7 +119,7 @@ export function toAdminDetail(complaint) {
   };
 }
 
-export async function listComplaints({ search, status, category, priority, from, to, page, limit, sort }) {
+export async function listComplaints({ search, status, category, priority, from, to, review, page, limit, sort }) {
   const filter = {};
   if (status) filter.status = status;
   if (category) filter.category = category;
@@ -126,10 +131,21 @@ export async function listComplaints({ search, status, category, priority, from,
     if (to) filter.createdAt.$lte = to;
   }
 
+  const orFilters = [];
+  if (review === 'flagged') {
+    orFilters.push({
+      $or: [{ 'aiSummary.spamDetected': true }, { 'aiSummary.duplicateDetected': true }],
+    });
+  } else {
+    filter['aiSummary.spamDetected'] = { $ne: true };
+    filter['aiSummary.duplicateDetected'] = { $ne: true };
+  }
+
   if (search) {
     const rx = new RegExp(escapeRegex(search), 'i');
-    filter.$or = [{ complaintId: rx }, { title: rx }, { description: rx }, { location: rx }];
+    orFilters.push({ $or: [{ complaintId: rx }, { title: rx }, { description: rx }, { location: rx }] });
   }
+  if (orFilters.length) filter.$and = orFilters;
 
   const sortSpec = sort === 'oldest' ? { createdAt: 1 } : { createdAt: -1 };
 

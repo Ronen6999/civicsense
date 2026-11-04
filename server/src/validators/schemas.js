@@ -55,6 +55,7 @@ export const listQuerySchema = z
     status: z.enum(STATUSES).optional(),
     category: z.enum(CATEGORIES).optional(),
     priority: z.enum(PRIORITIES).optional(),
+    review: z.enum(['all', 'flagged']).default('all'),
     from: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'from must be YYYY-MM-DD').optional(),
     to: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'to must be YYYY-MM-DD').optional(),
     page: z.coerce.number().int().min(1).default(1),

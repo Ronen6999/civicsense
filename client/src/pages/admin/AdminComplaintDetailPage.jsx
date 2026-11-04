@@ -109,6 +109,13 @@ export default function AdminComplaintDetailPage() {
             {complaint.aiSummary ? (
               <div className="space-y-3 text-sm">
                 <p className="whitespace-pre-wrap text-slate-900">{complaint.aiSummary.summary}</p>
+                {complaint.aiSummary.spamDetected && (
+                  <div className="rounded-md border border-red-200 bg-red-50 p-3 text-red-950">
+                    <strong>{t('admin.detail.possibleSpam')}</strong>{' '}
+                    ({Math.round((complaint.aiSummary.spamConfidence || 0) * 100)}% {t('admin.detail.confidence')})
+                    {complaint.aiSummary.spamReason && <p className="mt-1">{complaint.aiSummary.spamReason}</p>}
+                  </div>
+                )}
                 <dl className="grid gap-4 sm:grid-cols-3">
                   {complaint.aiSummary.imageAnalysis && <Meta label={t('admin.detail.imageInspection')}>{complaint.aiSummary.imageAnalysis}</Meta>}
                   {complaint.aiSummary.duplicateDetected && (
