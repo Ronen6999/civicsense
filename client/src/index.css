@@ -118,6 +118,12 @@
   }
 }
 
+@media (max-width: 639px) {
+  .public-footer-links {
+    display: none;
+  }
+}
+
 html[data-theme='dark'] [class~='bg-white'],
 html[data-theme='dark'] [class~='bg-white/95'],
 html[data-theme='dark'] [class~='focus:bg-white']:focus {

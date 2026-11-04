@@ -98,6 +98,8 @@
     },
     "submit": "Submit report",
     "submitting": "Submitting report…",
+    "progressTitle": "Submitting your complaint",
+    "progressMessage": "Please keep this page open. Your complaint ID and tracking token will appear as soon as submission is complete.",
     "failed": "Submission failed",
     "toastSuccess": "Complaint submitted successfully",
     "success": {

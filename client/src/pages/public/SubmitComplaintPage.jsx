@@ -217,7 +217,7 @@ export default function SubmitComplaintPage() {
     <section className="mx-auto max-w-[48rem]">
       <TranslationNotice />
 
-      <div className="surface-card p-4 sm:p-6 lg:p-8">
+      <div className="surface-card p-4 sm:p-6 lg:p-8" inert={submitting ? '' : undefined}>
         <h1 className="text-2xl font-bold text-slate-900">{t('submit.title')}</h1>
         <p className="mt-1 max-w-2xl text-sm text-slate-700">{t('submit.intro')}</p>
 
@@ -403,6 +403,23 @@ export default function SubmitComplaintPage() {
           </div>
         </form>
       </div>
+      {submitting && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/40 p-4 backdrop-blur-sm">
+          <div
+            role="status"
+            aria-live="polite"
+            aria-busy="true"
+            className="surface-card w-full max-w-sm p-6 text-center shadow-xl"
+          >
+            <svg className="mx-auto h-9 w-9 animate-spin text-brand-700" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" strokeOpacity="0.2" strokeWidth="3" />
+              <path d="M22 12a10 10 0 0 0-10-10" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+            </svg>
+            <h2 className="mt-4 text-lg font-semibold text-slate-900">{t('submit.progressTitle')}</h2>
+            <p className="mt-2 text-sm text-slate-700">{t('submit.progressMessage')}</p>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

@@ -95,7 +95,7 @@ export default function PublicLayout() {
       <footer className="border-t border-slate-200 bg-white">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 py-6 text-sm text-slate-600 sm:flex-row sm:items-center sm:justify-between">
           <p>{t('footer.text')}</p>
-          <div className="flex items-center gap-4">
+          <div className="public-footer-links flex items-center gap-4">
             <Link to="/report" className="hover:text-slate-900">
               {t('nav.report')}
             </Link>
