@@ -6,6 +6,7 @@ import Field from '../../components/ui/Field.jsx';
 import { Alert } from '../../components/ui/Feedback.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
 import LanguageSwitcher from '../../components/LanguageSwitcher.jsx';
+import ThemeToggle from '../../components/ThemeToggle.jsx';
 
 export default function AdminLoginPage() {
   const { t } = useTranslation();
@@ -39,7 +40,10 @@ export default function AdminLoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center px-4 py-10">
       <div className="w-full max-w-sm">
-        <div className="mb-4 flex justify-end"><LanguageSwitcher /></div>
+        <div className="mb-4 flex items-center justify-between">
+          <ThemeToggle />
+          <LanguageSwitcher />
+        </div>
         <h1 className="text-2xl font-bold text-brand-800">{t('admin.loginTitle')}</h1>
         <p className="mt-1 text-sm text-slate-600">{t('admin.loginIntro')}</p>
 

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher.jsx';
 import Button from './ui/Button.jsx';
 import SiteLogo from './SiteLogo.jsx';
+import ThemeToggle from './ThemeToggle.jsx';
 
 const navClass = ({ isActive }) =>
   `rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
@@ -47,6 +48,8 @@ export default function PublicLayout() {
             </nav>
             <LanguageSwitcher />
           </div>
+
+          <ThemeToggle />
 
           <button
             type="button"

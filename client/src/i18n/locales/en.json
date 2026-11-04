@@ -11,6 +11,10 @@
     "notSet": "Not yet set",
     "copyFallback": "Clipboard not available. Please copy manually."
   },
+  "theme": {
+    "switchToDark": "Switch to dark theme",
+    "switchToLight": "Switch to light theme"
+  },
   "nav": {
     "skipToContent": "Skip to main content",
     "report": "Report an issue",

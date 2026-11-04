@@ -3,6 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      try {
+        document.documentElement.dataset.theme = localStorage.getItem('civicsense.theme') === 'dark' ? 'dark' : 'light';
+      } catch {
+        document.documentElement.dataset.theme = 'light';
+      }
+    </script>
     <meta name="description" content="CivicSense: report and track campus issues, anonymously." />
     <link rel="icon" type="image/png" href="https://res.cloudinary.com/da4dwb3te/image/upload/v1793771938/20261104_112703_htuh5x.png" />
     <title>CivicSense</title>
