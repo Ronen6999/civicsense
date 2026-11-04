@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Button from '../../components/ui/Button.jsx';
@@ -74,6 +74,7 @@ export default function SubmitComplaintPage() {
     () => allowedTypes.map((type) => typeToExt[type]).filter(Boolean).join(', '),
     [allowedTypes]
   );
+  const descriptionCount = [...form.description].length;
 
   const validateImage = (file) => {
     if (!file) return '';
@@ -213,14 +214,14 @@ export default function SubmitComplaintPage() {
   const uploadsDisabled = config && !config.imageUploadEnabled;
 
   return (
-    <section className="mx-auto max-w-2xl">
+    <section className="mx-auto max-w-[48rem]">
       <TranslationNotice />
 
-      <div className="surface-card p-6 sm:p-8">
+      <div className="surface-card p-4 sm:p-6 lg:p-8">
         <h1 className="text-2xl font-bold text-slate-900">{t('submit.title')}</h1>
-        <p className="mt-2 text-slate-700">{t('submit.intro')}</p>
+        <p className="mt-1 max-w-2xl text-sm text-slate-700">{t('submit.intro')}</p>
 
-        <form onSubmit={onSubmit} noValidate className="mt-6 space-y-5">
+        <form onSubmit={onSubmit} noValidate className="mt-5 space-y-3.5 sm:space-y-5 lg:space-y-6">
           {submitError && (
             <Alert tone="error" title={t('submit.failed')}>
               {submitError}
@@ -238,53 +239,61 @@ export default function SubmitComplaintPage() {
             placeholder={t('submit.fields.title.placeholder')}
             maxLength={LIMITS.title[1]}
             autoComplete="off"
+            inputClassName="py-2 text-sm"
           />
 
-          <Field
-            as="textarea"
-            rows={6}
-            label={t('submit.fields.description.label')}
-            hint={`${t('submit.fields.description.hint')} ${t('submit.fields.description.counter', {
-              count: [...form.description].length,
-              max: LIMITS.description[1],
-            })}`}
-            error={errors.description}
-            required
-            requiredLabel={t('common.required')}
-            value={form.description}
-            onChange={update('description')}
-            placeholder={t('submit.fields.description.placeholder')}
-            maxLength={LIMITS.description[1]}
-          />
+          <div>
+            <Field
+              as="textarea"
+              rows={5}
+              label={t('submit.fields.description.label')}
+              hint={t('submit.fields.description.hint')}
+              error={errors.description}
+              required
+              requiredLabel={t('common.required')}
+              value={form.description}
+              onChange={update('description')}
+              placeholder={t('submit.fields.description.placeholder')}
+              maxLength={LIMITS.description[1]}
+              inputClassName="min-h-[8rem] resize-y py-2 text-sm"
+            />
+            <p className="mt-1 text-right text-xs text-slate-500">
+              {t('submit.fields.description.counter', { count: descriptionCount, max: LIMITS.description[1] })}
+            </p>
+          </div>
 
-          <Field
-            label={t('submit.fields.location.label')}
-            hint={t('submit.fields.location.hint')}
-            error={errors.location}
-            required
-            requiredLabel={t('common.required')}
-            value={form.location}
-            onChange={update('location')}
-            placeholder={t('submit.fields.location.placeholder')}
-            maxLength={LIMITS.location[1]}
-            autoComplete="off"
-          />
+          <div className="grid gap-3.5 lg:grid-cols-2 lg:gap-4">
+            <Field
+              label={t('submit.fields.location.label')}
+              hint={t('submit.fields.location.hint')}
+              error={errors.location}
+              required
+              requiredLabel={t('common.required')}
+              value={form.location}
+              onChange={update('location')}
+              placeholder={t('submit.fields.location.placeholder')}
+              maxLength={LIMITS.location[1]}
+              autoComplete="off"
+              inputClassName="py-2 text-sm"
+            />
 
-          <Field
-            as="select"
-            label={t('submit.fields.category.label')}
-            hint={t('submit.fields.category.hint')}
-            optionalLabel={t('common.optional')}
-            value={form.category}
-            onChange={update('category')}
-          >
-            <option value="">{t('submit.fields.category.placeholder')}</option>
-            {CATEGORIES.map((value) => (
-              <option key={value} value={value}>
-                {t(`category.${CATEGORY_KEY[value]}`, value)}
-              </option>
-            ))}
-          </Field>
+            <Field
+              as="select"
+              label={t('submit.fields.category.label')}
+              hint={t('submit.fields.category.hint')}
+              optionalLabel={t('common.optional')}
+              value={form.category}
+              onChange={update('category')}
+              inputClassName="py-2 text-sm"
+            >
+              <option value="">{t('submit.fields.category.placeholder')}</option>
+              {CATEGORIES.map((value) => (
+                <option key={value} value={value}>
+                  {t(`category.${CATEGORY_KEY[value]}`, value)}
+                </option>
+              ))}
+            </Field>
+          </div>
 
           <div>
             <label htmlFor="complaint-image" className="mb-1.5 block text-sm font-medium text-slate-800">
@@ -294,7 +303,7 @@ export default function SubmitComplaintPage() {
             {uploadsDisabled ? (
               <Alert tone="info">{t('submit.fields.image.disabled')}</Alert>
             ) : !config ? (
-              <Skeleton className="h-24 w-full" />
+              <Skeleton className="h-20 w-full" />
             ) : (
               <div
                 onDragOver={(event) => {
@@ -303,8 +312,8 @@ export default function SubmitComplaintPage() {
                 }}
                 onDragLeave={() => setDragOver(false)}
                 onDrop={onDrop}
-                className={`rounded-lg border-2 border-dashed p-4 transition-colors ${
-                  dragOver ? 'border-brand-400 bg-brand-50' : 'border-slate-300 bg-slate-50/60'
+                className={`rounded-lg border p-3 transition-colors ${
+                  dragOver ? 'border-brand-400 bg-brand-50' : 'border-slate-300 bg-white'
                 }`}
               >
                 <input
@@ -314,43 +323,57 @@ export default function SubmitComplaintPage() {
                   accept={allowedTypes.join(',')}
                   onChange={onImageChange}
                   aria-invalid={errors.image ? 'true' : undefined}
-                  aria-describedby="complaint-image-hint"
+                  aria-describedby={errors.image ? 'complaint-image-hint' : undefined}
                   className="sr-only"
                 />
 
                 {!image ? (
-                  <div className="text-center">
-                    <p className="text-sm font-medium text-slate-800">{t('submit.fields.image.dropTitle')}</p>
-                    <p className="mt-1 text-xs text-slate-600">{t('submit.fields.image.hint', { max: maxMb })}</p>
-                    <p className="mt-1 text-xs text-slate-600">{t('submit.fields.image.supported', { formats: acceptedTypesLabel })}</p>
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex items-start gap-3">
+                      <div className="mt-0.5 rounded-md bg-brand-50 p-2 text-brand-700">
+                        <AttachmentIcon />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-slate-900">{t('submit.fields.image.attachTitle')}</p>
+                        <p className="mt-0.5 text-xs text-slate-600">{t('submit.fields.image.hint')}</p>
+                        <p className="mt-1 text-xs text-slate-500">
+                          {t('submit.fields.image.supportedAndLimit', { formats: acceptedTypesLabel, max: maxMb })}
+                        </p>
+                      </div>
+                    </div>
                     <Button
                       type="button"
                       variant="secondary"
                       size="sm"
-                      className="mt-3"
+                      className="w-full sm:w-auto sm:shrink-0"
                       onClick={() => fileInput.current?.click()}
                     >
                       {t('submit.fields.image.choose')}
                     </Button>
                   </div>
                 ) : (
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
-                    <img src={imagePreview} alt={t('submit.fields.image.previewAlt')} className="h-28 w-40 rounded-md border border-slate-200 object-cover" />
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                    <img src={imagePreview} alt={t('submit.fields.image.previewAlt')} className="h-20 w-24 rounded-md border border-slate-200 object-cover" />
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-medium text-slate-800">{image.name}</p>
-                      <p className="mt-1 text-xs text-slate-600">{Math.round(image.size / 1024)} KB</p>
-                      <Button variant="ghost" size="sm" className="mt-2" onClick={removeImage}>
+                      <p className="truncate text-sm font-medium text-slate-900">{image.name}</p>
+                      <p className="mt-0.5 text-xs text-slate-600">{Math.round(image.size / 1024)} KB</p>
+                      <p className="mt-0.5 text-xs text-slate-500">
+                        {t('submit.fields.image.supportedAndLimit', { formats: acceptedTypesLabel, max: maxMb })}
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap gap-2 sm:shrink-0">
+                      <Button variant="secondary" size="sm" className="flex-1 sm:flex-none" onClick={() => fileInput.current?.click()}>
+                        {t('submit.fields.image.replace')}
+                      </Button>
+                      <Button variant="ghost" size="sm" className="flex-1 sm:flex-none" onClick={removeImage}>
                         {t('submit.fields.image.remove')}
                       </Button>
                     </div>
                   </div>
                 )}
 
-                <p id="complaint-image-hint" className="mt-3 text-xs text-slate-600">
-                  {t('submit.fields.image.hint', { max: maxMb })}
-                </p>
                 {errors.image && (
-                  <p className="mt-1 text-sm text-red-700" role="alert">
+                  <p id="complaint-image-hint" className="mt-2 text-sm text-red-700" role="alert">
                     {errors.image}
                   </p>
                 )}
@@ -358,25 +381,36 @@ export default function SubmitComplaintPage() {
             )}
           </div>
 
-          <Field
-            as="select"
-            label={t('submit.fields.language.label')}
-            hint={t('submit.fields.language.hint')}
-            value={form.language}
-            onChange={update('language')}
-          >
-            {LANGUAGES.map(({ code, nativeName }) => (
-              <option key={code} value={code} lang={code}>
-                {nativeName}
-              </option>
-            ))}
-          </Field>
+          <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+            <Field
+              as="select"
+              label={t('submit.fields.language.label')}
+              hint={t('submit.fields.language.hint')}
+              value={form.language}
+              onChange={update('language')}
+              inputClassName="py-2 text-sm"
+            >
+              {LANGUAGES.map(({ code, nativeName }) => (
+                <option key={code} value={code} lang={code}>
+                  {nativeName}
+                </option>
+              ))}
+            </Field>
 
-          <Button type="submit" disabled={submitting} className="w-full sm:w-auto">
-            {submitting ? t('submit.submitting') : t('submit.submit')}
-          </Button>
+            <Button type="submit" disabled={submitting} className="w-full sm:w-auto sm:min-w-44 lg:mb-5">
+              {submitting ? t('submit.submitting') : t('submit.submit')}
+            </Button>
+          </div>
         </form>
       </div>
     </section>
+  );
+}
+
+function AttachmentIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+      <path d="M7 12.5 13.8 5.7a3 3 0 1 1 4.2 4.2L10 18a5 5 0 0 1-7-7L11 3" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
   );
 }

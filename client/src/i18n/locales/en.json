@@ -50,44 +50,45 @@
   },
   "submit": {
     "title": "Report an issue",
-    "intro": "Submit a complaint in a few clear steps. Your report is stored securely and can be tracked privately.",
+    "intro": "Tell us what's wrong on campus. We'll help get it to the right department.",
     "fields": {
       "title": {
-        "label": "Complaint title",
-        "hint": "Keep it concise and specific.",
-        "placeholder": "Example: Water leakage near Library Block A"
+        "label": "What's the issue?",
+        "hint": "Write a short title describing the problem.",
+        "placeholder": "e.g. Broken lights near the library"
       },
       "description": {
-        "label": "Detailed description",
-        "hint": "Include what happened, when it started, and how it affects students or staff.",
-        "placeholder": "Describe the issue in detail so the assigned department can act quickly.",
+        "label": "Describe the issue",
+        "hint": "Share what happened so the right team can act quickly.",
+        "placeholder": "What happened? Where did it happen? Any additional details...",
         "counter": "{{count}} / {{max}} characters"
       },
       "location": {
-        "label": "Campus location",
-        "hint": "Mention building, floor, room, hostel, or landmark.",
-        "placeholder": "Example: Hostel C, 2nd floor washroom"
+        "label": "Where is the issue?",
+        "hint": "Include the building, floor, room, or nearby landmark.",
+        "placeholder": "e.g. Library, 2nd floor"
       },
       "category": {
-        "label": "Complaint category",
-        "hint": "Optional: choose one if you already know it. Otherwise AI will categorise it.",
-        "placeholder": "Let AI categorise automatically"
+        "label": "Issue category",
+        "hint": "Optional. Leave this on auto-detect and AI will suggest the best category and department.",
+        "placeholder": "Auto-detect category"
       },
       "image": {
-        "label": "Image upload",
-        "hint": "Maximum file size: {{max}} MB.",
+        "label": "Add a photo",
+        "attachTitle": "Attach an image",
+        "hint": "Help us understand the issue better.",
         "disabled": "Image upload is currently disabled by server configuration. You can still submit your complaint.",
+        "replace": "Replace",
         "remove": "Remove image",
         "tooLarge": "This image is larger than {{max}} MB.",
         "wrongType": "Please choose a supported image format.",
-        "dropTitle": "Drag and drop an image here, or choose from device",
-        "supported": "Supported formats: {{formats}}",
-        "choose": "Choose image",
+        "supportedAndLimit": "Supported: {{formats}} · Max {{max}} MB",
+        "choose": "Upload image",
         "previewAlt": "Selected complaint image preview"
       },
       "language": {
-        "label": "Preferred language",
-        "hint": "Used for communication preference and AI summary language."
+        "label": "Communication language",
+        "hint": "We'll use this language for updates and AI-generated summaries."
       }
     },
     "validation": {
@@ -95,8 +96,8 @@
       "descriptionLength": "Description must be between 20 and 5000 characters.",
       "locationLength": "Location must be between 2 and 120 characters."
     },
-    "submit": "Submit complaint",
-    "submitting": "Submitting complaint…",
+    "submit": "Submit report",
+    "submitting": "Submitting report…",
     "failed": "Submission failed",
     "toastSuccess": "Complaint submitted successfully",
     "success": {
