@@ -2,6 +2,8 @@
 
 CivicSense is a campus issue reporting platform. Students can submit complaints without an account and track updates privately; administrators review and manage reports in a dashboard.
 
+This is a hackathon project created for the Game of Codes Hackathon, conducted at Dibrugarh University.
+
 **Live demo:** [civicsense.ronen.in](https://civicsense.ronen.in)
 
 ![CivicSense demo](https://res.cloudinary.com/da4dwb3te/image/upload/v1793774447/Capture_umbcfw.png)
